@@ -23,19 +23,55 @@ function loadTable(data) {
 // load the data to the table when the page loads
 loadTable(tableData);
 
+
 // *** function to respond to selection criteria ***
 
 // Install event handler on the Date button
-// clear any existing table rows
 // log the capture of the table data and the entered date
 // filter the table by the entered date, return and log results
-// iterate through returned results, appending result rows to table
 
-button.on("click", function() {
-    var dateTime = d3.select("#datetime").property("value");
-    console.log(dateTime);
 
-    var filteredData = tableData.filter(ufo => ufo.datetime === dateTime);
-    console.log(filteredData);
+// button.on("click", function() {
+//     var dateTime = d3.select("#datetime").property("value");
+//     console.log(dateTime);
+
+//     var filteredData = tableData.filter(ufo => ufo.datetime === dateTime);
+//     console.log(filteredData);
+//     loadTable(filteredData);
+// });
+
+
+var filters = {};
+
+//handles for the element, value, and ID of filters that were changed
+
+function checkFilters() {
+    var changedElement = d3.select(this).select("input");
+    var elementValue = changedElement.property("value");
+    var filterID = changedElement.attr("id");
+    console.log(elementValue);
+    console.log(filterID);
+
+    if (elementValue) {
+        filters[filterID] = elementValue;
+    }    
+    else {
+        delete filters[filterID];
+    }
+    filterTable();
+}
+
+function filterTable() {
+    let filteredData = tableData;
+
+    Object.entries(filters).forEach(([key, value]) => {
+    
+        filteredData = filteredData.filter(row =>row[key] === value);
+    });
     loadTable(filteredData);
-});
+}
+
+
+
+d3.selectAll(".filter").on("change", checkFilters);
+
