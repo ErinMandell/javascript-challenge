@@ -8,12 +8,12 @@ var button = d3.select("#filter-btn");
 // iterate through data set, append a table row for each entry 
 // and then append table data for every value 
 
-function loadTable(data) {
+function buildTable(data) {
     tbody.html("");
 
-    data.forEach((ufoSighting) => {
+    data.forEach((dataRow) => {
         var row = tbody.append("tr");
-        Object.entries(ufoSighting).forEach(([key,value]) => {
+        Object.entries(dataRow).forEach(([key,value]) => {
             var cell = row.append("td");
             cell.text(value);
         });
@@ -21,7 +21,7 @@ function loadTable(data) {
 }
 
 // load the data to the table when the page loads
-loadTable(tableData);
+buildTable(tableData);
 
 
 // *** function to respond to selection criteria ***
@@ -45,7 +45,7 @@ var filters = {};
 
 //handles for the element, value, and ID of filters that were changed
 
-function checkFilters() {
+function updateFilters() {
     var changedElement = d3.select(this).select("input");
     var elementValue = changedElement.property("value");
     var filterID = changedElement.attr("id");
@@ -68,10 +68,10 @@ function filterTable() {
     
         filteredData = filteredData.filter(row =>row[key] === value);
     });
-    loadTable(filteredData);
+    buildTable(filteredData);
 }
 
 
 
-d3.selectAll(".filter").on("change", checkFilters);
+d3.selectAll(".filter").on("change", updateFilters);
 
