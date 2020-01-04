@@ -13,35 +13,14 @@ function buildTable(data) {
 
     data.forEach((dataRow) => {
         var row = tbody.append("tr");
-        Object.entries(dataRow).forEach(([key,value]) => {
+        Object.values(dataRow).forEach((value) => {
             var cell = row.append("td");
             cell.text(value);
         });
     });
 }
 
-// load the data to the table when the page loads
-buildTable(tableData);
-
-
-// *** function to respond to selection criteria ***
-
-// Install event handler on the Date button
-// log the capture of the table data and the entered date
-// filter the table by the entered date, return and log results
-
-
-// button.on("click", function() {
-//     var dateTime = d3.select("#datetime").property("value");
-//     console.log(dateTime);
-
-//     var filteredData = tableData.filter(ufo => ufo.datetime === dateTime);
-//     console.log(filteredData);
-//     loadTable(filteredData);
-// });
-
-
-var filters = {};
+let filters = {};
 
 //handles for the element, value, and ID of filters that were changed
 
@@ -54,6 +33,7 @@ function updateFilters() {
 
     if (elementValue) {
         filters[filterID] = elementValue;
+        console.log(elementValue);
     }    
     else {
         delete filters[filterID];
@@ -65,13 +45,11 @@ function filterTable() {
     let filteredData = tableData;
 
     Object.entries(filters).forEach(([key, value]) => {
-    
-        filteredData = filteredData.filter(row =>row[key] === value);
+        filteredData = filteredData.filter((row) => row[key] === value);
     });
     buildTable(filteredData);
 }
 
 
-
 d3.selectAll(".filter").on("change", updateFilters);
-
+buildTable(tableData);
