@@ -6,9 +6,11 @@ var tbody = d3.select("tbody");
 buildTable(tableData);
 
 
+
 // *** EVENT HANDLER TO RESPOND TO USER INPUT ***
 // event handler looks at all input fields (they have a class of 'filter')
 // when a change occurs in any of these fields, call the setFilters function
+
 d3.selectAll(".filter").on("change", setFilters);
 
 
@@ -67,8 +69,8 @@ function setFilters() {
 // Move the full data set to a new variable to work with it
 // From the 'filters' object, for each key:value pair in that dictionary
 // filter the dataset rows where the ??? key???  is equal to the 'filters' value?
-//    ?? I'm not completely clear on why this line of code (#78) works ??
-
+//    ?? I'm not completely clear on why this line of code (#80) works ??
+//
 // Call the buildTable function above to build a new table with this filtered data set
 
 function filterTable() {
